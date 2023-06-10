@@ -25,17 +25,21 @@ submit.addEventListener("click", () => {
       user = data.login;
       console.table(data);
       const template = `
-      <div id="result">
+      <section id="result">
+         <div class="userInfo">
           <img id="profile-picture" alt="profile picture" src="${data.avatar_url}"></img>
-          <span>${data.name}</span>
-          <span>${data.login}</span>
-          <a href="${data.html_url}" target="_blank">Profile</a>
-          <span>${data.blog}</span>
-          <span>${data.location}</span>
-          <span>Nombre de repos publics : ${data.public_repos}</span>
-          <span>${data.followers}</span>
-          <span>${data.following}</span>
-      </div>
+          <div class="pseudoInfo">
+            <span class="githubName">${data.name}</span>
+            <span class="githubUsername">${data.login}</span>
+            </div>
+            <a class="profileLink" href="${data.html_url}" target="_blank"><button class="githubLinkButton">Voir profil</button></a>
+         </div>
+          <span class="githubLocation">${data.location}</span>
+          <a href="${data.blog}" class="pinnedLink">Lien épinglé</a>
+          <span class="publicRepos">Nombre de repos publics : ${data.public_repos}</span>
+          <span>Abonnés : ${data.followers}</span>
+          <span>Abonnements : ${data.following}</span>
+      </section>
     `;
       output.innerHTML = template;
 
@@ -49,15 +53,38 @@ submit.addEventListener("click", () => {
           data.forEach((repo) => {
             const template = `
               <div id="repos">
-                <a href="${repo.html_url}" target="_blank">${repo.name}</a>
+                <a class="repoName" href="${repo.html_url}" target="_blank">${repo.name}</a>
               </div>
             `;
             output.innerHTML += template;
           });
         });
+
+      //* Stockage du dernier utilisateur recherché dans le localStorage
+      localStorage.setItem("lastUser", search.value);
     })
     .catch((error) => {
       console.error("Une erreur s'est produite lors de la récupération du profil :", error);
       output.innerHTML = "<div id='error-message'>Profil GitHub non trouvé</div>";
     });
 });
+
+//* Recherche automatique du dernier utilisateur recherché au chargement de la page
+window.addEventListener("load", () => {
+  const lastUser = localStorage.getItem("lastUser");
+  if (lastUser) {
+    search.value = lastUser;
+    submit.click();
+  }
+});
+
+//* Vérifier si c'est la première visite en utilisant le localStorage
+const isFirstVisit = localStorage.getItem("isFirstVisit");
+
+if (!isFirstVisit) {
+  //* Afficher l'alerte lors de la première visite
+  window.alert("Site en cours de développement");
+
+  //* Enregistrer l'indicateur de première visite dans le localStorage
+  localStorage.setItem("isFirstVisit", "true");
+}

@@ -1,10 +1,18 @@
+:root {
+  --principal-color: #0d1117;
+  --ligth-gray: #161b22;
+  --gray: #737b85;
+  --links-color: #2f81f7;
+  --font-size-large: 20px;
+}
+
 * {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 600;
 }
 
 body {
-  background-color: #0d1117;
+  background-color: var(--principal-color);
   color: white;
   margin: 0;
   padding: 0;
@@ -14,13 +22,18 @@ main {
   padding: 2rem;
 }
 
+a {
+  width: fit-content;
+  color: var(--links-color);
+}
+
 .form {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   gap: 0.5rem;
-  background: #161b22;
+  background: var(--ligth-gray);
   padding: 2rem 2rem;
 }
 .form input {
@@ -37,15 +50,16 @@ main {
 
 #submit-btn {
   transition: all 0.3s;
+  cursor: pointer;
 }
 
 #submit-btn:hover {
-  background: #1f6feb;
-  border: 2px solid #1f6feb;
+  background: var(--links-color);
+  border: 2px solid var(--links-color);
 }
 
 #profile-picture {
-  width: 30vw;
+  width: 20vw;
   border-radius: 50%;
   border: 2px solid white;
 }
@@ -60,4 +74,36 @@ main {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+}
+
+.userInfo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 0.4rem;
+}
+
+.githubLinkButton {
+  width: fit-content;
+  cursor: pointer;
+  background-color: var(--gray);
+  border: #fff 1px solid;
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 10px;
+  transition: all 0.4s;
+}
+
+.githubLinkButton:hover {
+  background: var(--links-color);
+}
+
+.pseudoInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.githubUsername {
+  font-weight: 100;
+  color: var(--gray);
 }
